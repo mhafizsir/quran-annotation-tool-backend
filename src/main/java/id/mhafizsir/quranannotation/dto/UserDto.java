@@ -16,16 +16,13 @@ public class UserDto extends DateAuditDto {
   private UUID id;
   private String username;
   private String email;
-  private UserProfileDto userProfile;
 
-  public UserDto(User owner) {
+  public UserDto(User user) {
 
-    this.id = owner.getId();
-    this.username = owner.getUsername();
-    this.email = owner.getEmail();
-    this.userProfile = new UserProfileDto(owner.getUserProfile());
-
-    this.setCreatedAt(owner.getCreatedAt());
-    this.setUpdatedAt(owner.getUpdatedAt());
+    this.id = user.getId();
+    this.username = user.getUsername();
+    this.email = user.getEmail();
+    this.setCreatedAt(user.getCreatedAt());
+    this.setUpdatedAt(user.getUpdatedAt());
   }
 }
