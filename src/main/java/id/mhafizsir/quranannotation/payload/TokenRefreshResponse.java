@@ -1,9 +1,11 @@
 package id.mhafizsir.quranannotation.payload;
 
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
-public class TokenRefreshResponse {
+@SuperBuilder
+public class TokenRefreshResponse extends GeneralResponse {
 
   private String accessToken;
   private String refreshToken;

@@ -4,12 +4,16 @@ import id.mhafizsir.quranannotation.dao.User;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignupResponse {
+@EqualsAndHashCode(callSuper = true)
+public class SignupResponse extends GeneralResponse {
 
   private UUID id;
   private String email;

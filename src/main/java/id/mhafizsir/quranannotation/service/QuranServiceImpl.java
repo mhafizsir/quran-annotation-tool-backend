@@ -1,7 +1,8 @@
 package id.mhafizsir.quranannotation.service;
 
-import id.mhafizsir.quranannotation.payload.GeneralResponse;
+import id.mhafizsir.quranannotation.dao.QuranWords;
 import id.mhafizsir.quranannotation.repository.QuranRepository;
+import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,8 +15,7 @@ public class QuranServiceImpl implements QuranService {
   }
 
   @Override
-  public GeneralResponse getQuranWordsBySuraId(Integer suraId) {
-    return new GeneralResponse("00", "Get Quran Words By Sura Id = " + suraId + " success",
-        quranRepository.getQuranWordsBySuraId(suraId));
+  public List<QuranWords> getQuranWordsBySuraId(Integer suraId) {
+    return quranRepository.getQuranWordsBySuraId(suraId);
   }
 }

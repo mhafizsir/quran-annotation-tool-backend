@@ -1,8 +1,9 @@
 package id.mhafizsir.quranannotation.service;
 
-import id.mhafizsir.quranannotation.payload.GeneralResponse;
+import id.mhafizsir.quranannotation.dao.QuranWords;
+import java.util.List;
 
 public interface QuranService {
 
-  GeneralResponse getQuranWordsBySuraId(Integer suraId);
+  List<QuranWords> getQuranWordsBySuraId(Integer suraId);
 }

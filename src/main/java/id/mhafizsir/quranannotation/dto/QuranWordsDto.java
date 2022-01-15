@@ -1,13 +1,18 @@
 package id.mhafizsir.quranannotation.dto;
 
+import id.mhafizsir.quranannotation.payload.GeneralResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuranWordsDto {
+@EqualsAndHashCode(callSuper = true)
+public class QuranWordsDto extends GeneralResponse {
 
   private Integer id;
   private Integer aya;

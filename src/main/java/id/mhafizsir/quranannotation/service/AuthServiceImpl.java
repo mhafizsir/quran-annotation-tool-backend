@@ -2,7 +2,6 @@ package id.mhafizsir.quranannotation.service;
 
 import id.mhafizsir.quranannotation.dao.User;
 import id.mhafizsir.quranannotation.dao.UserProfile;
-import id.mhafizsir.quranannotation.payload.GeneralResponse;
 import id.mhafizsir.quranannotation.payload.SigninRequest;
 import id.mhafizsir.quranannotation.payload.SigninResponse;
 import id.mhafizsir.quranannotation.payload.SignupRequest;
@@ -18,7 +17,6 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -53,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   @Transactional
-  public GeneralResponse signin(SigninRequest request) {
+  public SigninResponse signin(SigninRequest request) {
 
     log.info("### signin start ###");
     String username = request.getUsername();
@@ -68,31 +66,27 @@ public class AuthServiceImpl implements AuthService {
     SecurityContextHolder.getContext().setAuthentication(authentication);
     String jwt = jwtUtils.generateJwtToken((UserDetailsImpl) authentication.getPrincipal());
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-    GeneralResponse response = new GeneralResponse();
     var user = userRepository.findByUsernameOrEmail(userDetails.getEmail());
     if (user == null) {
       throw new UsernameNotFoundException("User Not Found with username: " + username);
     }
-    response.setCode("00");
-    response.setMessage("Login Success");
-    response.setData(SigninResponse.builder().type("Bearer").token(jwt).refreshToken(
-            String.valueOf(createRefreshToken(user.getUserProfile()).getRefreshToken()))
-        .email(userDetails.getEmail()).username(userDetails.getUsername()).build());
     log.info("### signin finish ###");
+    SigninResponse response = SigninResponse.builder().type("Bearer").token(jwt).refreshToken(
+            String.valueOf(createRefreshToken(user.getUserProfile()).getRefreshToken()))
+        .email(userDetails.getEmail()).username(userDetails.getUsername()).build();
     return response;
   }
 
   @Override
   @Transactional
-  public ResponseEntity<GeneralResponse> signup(SignupRequest request) {
+  public SignupResponse signup(SignupRequest request) {
 
     log.info("### signup start ###");
 
     if (Strings.hasText(request.getUsername()) && userRepository.existsByUsernameOrEmail(
         request.getUsername(), request.getUsername())) {
-      return ResponseEntity.badRequest().body(
-          GeneralResponse.builder().code("01").message("Error: Username or Email is already taken!")
-              .data(request.getUsername()).build());
+      return SignupResponse.builder().code("01")
+          .message("Error: Username or Email is already taken!").build();
     }
 
     var now = OffsetDateTime.now();
@@ -109,21 +103,21 @@ public class AuthServiceImpl implements AuthService {
     userProfileRepository.save(userProfile);
 
     log.info("### signup finish ###");
-    return ResponseEntity.ok(
-        GeneralResponse.builder().code("00").message("User registered successfully!")
-            .data(new SignupResponse(savedUser)).build());
+    return SignupResponse.builder().code("00").message("User registered successfully!").build();
   }
 
   @Override
-  public ResponseEntity<GeneralResponse> refreshToken(TokenRefreshRequest request) {
+  public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
 
     return userProfileRepository.findByRefreshToken(request.getRefreshToken())
-        .map(this::verifyRefreshTokenExpiration).map(UserProfile::getUser).map(user -> {
+        .map(this::verifyRefreshTokenExpiration).map(UserProfile::getUser).map((User user) -> {
           String token = jwtUtils.generateTokenFromUsername(user.getUsername());
           var refreshToken = createRefreshToken(user.getUserProfile()).getRefreshToken();
-          return ResponseEntity.ok(
-              GeneralResponse.builder().code("00").message("Refresh Token Success")
-                  .data(new TokenRefreshResponse(token, refreshToken)).build());
+          TokenRefreshResponse response = TokenRefreshResponse.builder().code("00")
+              .message("Refresh Token Success").accessToken(token)
+              .refreshToken(refreshToken)
+              .tokenType("Bearer ").build();
+          return response;
         }).orElseThrow(() -> new TokenRefreshException(request.getRefreshToken(),
             "Refresh token is not in database!"));
   }

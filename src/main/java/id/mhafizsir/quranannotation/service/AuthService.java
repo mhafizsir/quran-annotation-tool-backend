@@ -1,17 +1,18 @@
 package id.mhafizsir.quranannotation.service;
 
-import id.mhafizsir.quranannotation.payload.GeneralResponse;
 import id.mhafizsir.quranannotation.payload.SigninRequest;
+import id.mhafizsir.quranannotation.payload.SigninResponse;
 import id.mhafizsir.quranannotation.payload.SignupRequest;
+import id.mhafizsir.quranannotation.payload.SignupResponse;
 import id.mhafizsir.quranannotation.payload.TokenRefreshRequest;
+import id.mhafizsir.quranannotation.payload.TokenRefreshResponse;
 import javax.validation.Valid;
-import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
 
-  GeneralResponse signin(@Valid SigninRequest request);
+  SigninResponse signin(@Valid SigninRequest request);
 
-  ResponseEntity<GeneralResponse> signup(SignupRequest request);
+  SignupResponse signup(SignupRequest request);
 
-  ResponseEntity<GeneralResponse> refreshToken(TokenRefreshRequest request);
+  TokenRefreshResponse refreshToken(TokenRefreshRequest request);
 }

@@ -1,8 +1,8 @@
 package id.mhafizsir.quranannotation.controller;
 
 import id.mhafizsir.quranannotation.dto.LabelDto;
-import id.mhafizsir.quranannotation.payload.GeneralResponse;
 import id.mhafizsir.quranannotation.service.LabelService;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +23,7 @@ public class LabelController {
   }
 
   @GetMapping
-  public ResponseEntity<GeneralResponse> getLabels() {
+  public ResponseEntity<List<LabelDto>> getLabels() {
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
         .getPrincipal();
     var username = userDetails.getUsername();
@@ -31,7 +31,7 @@ public class LabelController {
   }
 
   @PostMapping
-  public ResponseEntity<GeneralResponse> createLabels(@RequestBody LabelDto labelDto) {
+  public ResponseEntity<List<LabelDto>> createLabels(@RequestBody LabelDto labelDto) {
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
         .getPrincipal();
     var username = userDetails.getUsername();

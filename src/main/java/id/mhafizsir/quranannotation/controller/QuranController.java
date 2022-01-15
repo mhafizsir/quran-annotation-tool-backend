@@ -1,7 +1,8 @@
 package id.mhafizsir.quranannotation.controller;
 
-import id.mhafizsir.quranannotation.payload.GeneralResponse;
+import id.mhafizsir.quranannotation.dao.QuranWords;
 import id.mhafizsir.quranannotation.service.QuranService;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ public class QuranController {
   }
 
   @GetMapping("/sura/{suraId}")
-  public ResponseEntity<GeneralResponse> getQuranWordsBySuraId(
+  public ResponseEntity<List<QuranWords>> getQuranWordsBySuraId(
       @PathVariable("suraId") Integer suraId) {
     return ResponseEntity.ok(quranService.getQuranWordsBySuraId(suraId));
   }

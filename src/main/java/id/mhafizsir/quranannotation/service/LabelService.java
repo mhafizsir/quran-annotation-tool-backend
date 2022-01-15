@@ -1,11 +1,11 @@
 package id.mhafizsir.quranannotation.service;
 
 import id.mhafizsir.quranannotation.dto.LabelDto;
-import id.mhafizsir.quranannotation.payload.GeneralResponse;
+import java.util.List;
 
 public interface LabelService {
 
-  GeneralResponse getLabels(String username);
+  List<LabelDto> getLabels(String username);
 
-  GeneralResponse createLabel(LabelDto labelDto, String username);
+  List<LabelDto> createLabel(LabelDto labelDto, String username);
 }
