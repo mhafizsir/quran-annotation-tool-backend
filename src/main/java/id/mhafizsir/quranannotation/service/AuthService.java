@@ -1,5 +1,6 @@
 package id.mhafizsir.quranannotation.service;
 
+import id.mhafizsir.quranannotation.dao.User;
 import id.mhafizsir.quranannotation.payload.SigninRequest;
 import id.mhafizsir.quranannotation.payload.SigninResponse;
 import id.mhafizsir.quranannotation.payload.SignupRequest;
@@ -15,4 +16,6 @@ public interface AuthService {
   SignupResponse signup(SignupRequest request);
 
   TokenRefreshResponse refreshToken(TokenRefreshRequest request);
+
+  User getUserByUsername(String username);
 }

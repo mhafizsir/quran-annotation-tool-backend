@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
   @Query(value = "select u from User u "
+      + "join fetch u.userProfile up "
       + "where u.username = :username "
       + "or u.email = :username ")
   User findByUsernameOrEmail(@Param("username") String username);

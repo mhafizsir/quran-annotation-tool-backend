@@ -39,4 +39,9 @@ public class QuranServiceImpl implements QuranService {
     }
     return quranWordsList;
   }
+
+  @Override
+  public QuranWords getQuranWordsById(Integer id) {
+    return quranRepository.getById(id);
+  }
 }

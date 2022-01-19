@@ -10,4 +10,6 @@ public interface QuranService {
   List<QuranWords> getQuranWordsByPageId(Integer pageId);
 
   List<QuranWords> getSuraNames();
+
+  QuranWords getQuranWordsById(Integer id);
 }

@@ -71,10 +71,9 @@ public class AuthServiceImpl implements AuthService {
       throw new UsernameNotFoundException("User Not Found with username: " + username);
     }
     log.info("### signin finish ###");
-    SigninResponse response = SigninResponse.builder().type("Bearer").token(jwt).refreshToken(
+    return SigninResponse.builder().type("Bearer").token(jwt).refreshToken(
             String.valueOf(createRefreshToken(user.getUserProfile()).getRefreshToken()))
         .email(userDetails.getEmail()).username(userDetails.getUsername()).build();
-    return response;
   }
 
   @Override
@@ -110,16 +109,16 @@ public class AuthServiceImpl implements AuthService {
   public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
 
     return userProfileRepository.findByRefreshToken(request.getRefreshToken())
-        .map(this::verifyRefreshTokenExpiration).map(UserProfile::getUser).map((User user) -> {
-          String token = jwtUtils.generateTokenFromUsername(user.getUsername());
-          var refreshToken = createRefreshToken(user.getUserProfile()).getRefreshToken();
-          TokenRefreshResponse response = TokenRefreshResponse.builder().code("00")
-              .message("Refresh Token Success").accessToken(token)
-              .refreshToken(refreshToken)
-              .tokenType("Bearer ").build();
-          return response;
-        }).orElseThrow(() -> new TokenRefreshException(request.getRefreshToken(),
+        .map(this::verifyRefreshTokenExpiration).map(UserProfile::getUser)
+        .map(this::buildTokenRefreshResponse)
+        .orElseThrow(() -> new TokenRefreshException(request.getRefreshToken(),
             "Refresh token is not in database!"));
+  }
+
+  @Override
+  public User getUserByUsername(String username) {
+
+    return userRepository.findByUsernameOrEmail(username);
   }
 
   private UserProfile createRefreshToken(UserProfile userProfile) {
@@ -149,5 +148,14 @@ public class AuthServiceImpl implements AuthService {
       userProfile.setRefreshTokenExpiry(null);
       userProfileRepository.save(userProfile);
     });
+  }
+
+  private TokenRefreshResponse buildTokenRefreshResponse(User user) {
+    String token = jwtUtils.generateTokenFromUsername(user.getUsername());
+    var refreshToken = createRefreshToken(user.getUserProfile()).getRefreshToken();
+    return TokenRefreshResponse.builder().code("00")
+        .message("Refresh Token Success").accessToken(token)
+        .refreshToken(refreshToken)
+        .tokenType("Bearer ").build();
   }
 }
