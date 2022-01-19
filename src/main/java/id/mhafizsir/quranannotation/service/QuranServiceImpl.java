@@ -18,4 +18,9 @@ public class QuranServiceImpl implements QuranService {
   public List<QuranWords> getQuranWordsBySuraId(Integer suraId) {
     return quranRepository.getQuranWordsBySuraId(suraId);
   }
+
+//  @Override
+//  public List<String> getSuras() {
+//    return quranRepository.getSuras();
+//  }
 }

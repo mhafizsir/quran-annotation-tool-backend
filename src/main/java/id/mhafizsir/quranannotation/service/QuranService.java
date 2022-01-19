@@ -6,4 +6,6 @@ import java.util.List;
 public interface QuranService {
 
   List<QuranWords> getQuranWordsBySuraId(Integer suraId);
+
+//  List<String> getSuras();
 }

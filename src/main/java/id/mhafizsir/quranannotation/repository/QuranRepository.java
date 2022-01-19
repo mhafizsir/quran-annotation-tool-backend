@@ -12,4 +12,6 @@ public interface QuranRepository extends JpaRepository<QuranWords, Integer> {
 
   @Query(value = "select q from QuranWords q where q.sura = :suraId")
   List<QuranWords> getQuranWordsBySuraId(@Param("suraId") Integer suraId);
+
+//  List<String> getSuras();
 }
