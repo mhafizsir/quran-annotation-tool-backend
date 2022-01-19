@@ -44,4 +44,6 @@ public class QuranWords {
   private String charType;
   @Column(name = "translation", updatable = false, insertable = false)
   private String translation;
+  @Column(name = "sura_name", updatable = false, insertable = false)
+  private String suraName;
 }
