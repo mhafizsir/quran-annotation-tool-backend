@@ -24,4 +24,16 @@ public class QuranController {
       @PathVariable("suraId") Integer suraId) {
     return ResponseEntity.ok(quranService.getQuranWordsBySuraId(suraId));
   }
+
+  @GetMapping("/page/{pageId}")
+  public ResponseEntity<List<QuranWords>> getQuranWordsByPageId(
+      @PathVariable("pageId") Integer pageId) {
+    return ResponseEntity.ok(quranService.getQuranWordsByPageId(pageId));
+  }
+
+  @GetMapping("/sura")
+  public ResponseEntity<List<QuranWords>> getSuraNames(){
+
+    return ResponseEntity.ok(quranService.getSuraNames());
+  }
 }

@@ -7,5 +7,7 @@ public interface QuranService {
 
   List<QuranWords> getQuranWordsBySuraId(Integer suraId);
 
-//  List<String> getSuras();
+  List<QuranWords> getQuranWordsByPageId(Integer pageId);
+
+  List<QuranWords> getSuraNames();
 }
