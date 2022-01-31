@@ -1,16 +1,14 @@
 package id.mhafizsir.quranannotation.service;
 
-import id.mhafizsir.quranannotation.dao.QuranWords;
 import id.mhafizsir.quranannotation.dto.QuranWordsDto;
 import java.util.List;
+import java.util.UUID;
 
 public interface QuranService {
 
-  List<QuranWords> getQuranWordsBySuraId(Integer suraId);
+  List<QuranWordsDto> getQuranWordsBySuraId(Integer suraId, UUID labelId);
 
-  List<QuranWords> getQuranWordsByPageId(Integer pageId);
+  List<QuranWordsDto> getQuranWordsByPageId(Integer pageId, UUID labelId);
 
   List<QuranWordsDto> getSuraNames();
-
-  QuranWords getQuranWordsById(Integer id);
 }

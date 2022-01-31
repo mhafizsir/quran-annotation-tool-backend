@@ -1,5 +1,6 @@
 package id.mhafizsir.quranannotation.dto;
 
+import id.mhafizsir.quranannotation.dao.Annotation;
 import id.mhafizsir.quranannotation.dao.QuranWords;
 import id.mhafizsir.quranannotation.payload.GeneralResponse;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class QuranWordsDto extends GeneralResponse {
   private String codeV3;
   private String charType;
   private String translation;
+  private LabelDto labelDto;
 
   public QuranWordsDto(QuranWords quranWords) {
 
@@ -48,5 +50,27 @@ public class QuranWordsDto extends GeneralResponse {
     this.codeV3 = quranWords.getCodeV3();
     this.charType = quranWords.getCharType();
     this.translation = quranWords.getTranslation();
+  }
+
+  public QuranWordsDto(QuranWords quranWords, Annotation annotation) {
+
+    this.id = quranWords.getId();
+    this.aya = quranWords.getAya();
+    this.sura = quranWords.getSura();
+    this.suraName = quranWords.getSuraName();
+    this.position = quranWords.getPosition();
+    this.verseKey = quranWords.getVerseKey();
+    this.text = quranWords.getText();
+    this.simple = quranWords.getSimple();
+    this.page = quranWords.getPage();
+    this.className = quranWords.getClassName();
+    this.line = quranWords.getLine();
+    this.code = quranWords.getCode();
+    this.codeV3 = quranWords.getCodeV3();
+    this.charType = quranWords.getCharType();
+    this.translation = quranWords.getTranslation();
+    if (annotation != null) {
+      this.labelDto = new LabelDto(annotation.getLabel());
+    }
   }
 }

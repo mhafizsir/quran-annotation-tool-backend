@@ -5,10 +5,20 @@ import id.mhafizsir.quranannotation.dao.User;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AnnotationRepository extends JpaRepository<Annotation, UUID> {
 
   List<Annotation> getAnnotationsByUser(User user);
+
+  @Query(value = "select a from Annotation a "
+      + "left join fetch a.quranWords q "
+      + "left join fetch a.label l "
+      + "where q.id in (:quranIds) "
+      + "and l.id=:labelId ")
+  List<Annotation> getAnnotationsByQuranIdAndLabelId(@Param("quranIds") List<Integer> quranIds,
+      @Param("labelId") UUID labelId);
 }

@@ -1,13 +1,14 @@
 package id.mhafizsir.quranannotation.controller;
 
-import id.mhafizsir.quranannotation.dao.QuranWords;
 import id.mhafizsir.quranannotation.dto.QuranWordsDto;
 import id.mhafizsir.quranannotation.service.QuranService;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,19 +22,21 @@ public class QuranController {
   }
 
   @GetMapping("/sura/{suraId}")
-  public ResponseEntity<List<QuranWords>> getQuranWordsBySuraId(
-      @PathVariable("suraId") Integer suraId) {
-    return ResponseEntity.ok(quranService.getQuranWordsBySuraId(suraId));
+  public ResponseEntity<List<QuranWordsDto>> getQuranWordsBySuraId(
+      @PathVariable("suraId") Integer suraId,
+      @RequestParam(value = "labelId", required = false, defaultValue = "") UUID labelId) {
+    return ResponseEntity.ok(quranService.getQuranWordsBySuraId(suraId, labelId));
   }
 
   @GetMapping("/page/{pageId}")
-  public ResponseEntity<List<QuranWords>> getQuranWordsByPageId(
-      @PathVariable("pageId") Integer pageId) {
-    return ResponseEntity.ok(quranService.getQuranWordsByPageId(pageId));
+  public ResponseEntity<List<QuranWordsDto>> getQuranWordsByPageId(
+      @PathVariable("pageId") Integer pageId,
+      @RequestParam(value = "labelId", required = false, defaultValue = "") UUID labelId) {
+    return ResponseEntity.ok(quranService.getQuranWordsByPageId(pageId, labelId));
   }
 
   @GetMapping("/sura")
-  public ResponseEntity<List<QuranWordsDto>> getSuraNames(){
+  public ResponseEntity<List<QuranWordsDto>> getSuraNames() {
 
     return ResponseEntity.ok(quranService.getSuraNames());
   }

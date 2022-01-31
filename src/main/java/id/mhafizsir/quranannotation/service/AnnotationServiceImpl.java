@@ -4,8 +4,10 @@ import id.mhafizsir.quranannotation.dao.Annotation;
 import id.mhafizsir.quranannotation.dto.AnnotationDto;
 import id.mhafizsir.quranannotation.payload.CreateAnnotationRequest;
 import id.mhafizsir.quranannotation.repository.AnnotationRepository;
+import id.mhafizsir.quranannotation.repository.QuranRepository;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ public class AnnotationServiceImpl implements AnnotationService {
 
   private final AuthService authService;
   private final LabelService labelService;
-  private final QuranService quranService;
+  private final QuranRepository quranRepository;
   private final AnnotationRepository annotationRepository;
 
   @Override
@@ -26,7 +28,7 @@ public class AnnotationServiceImpl implements AnnotationService {
 
     var user = authService.getUserByUsername(username);
     var label = labelService.getLabel(request.getLabelId());
-    var quranWords = quranService.getQuranWordsById(request.getQuranWordsId());
+    var quranWords = quranRepository.getById(request.getQuranWordsId());
 
     var annotation = new Annotation();
     annotation.setCreatedAt(OffsetDateTime.now());
@@ -47,5 +49,11 @@ public class AnnotationServiceImpl implements AnnotationService {
     var user = authService.getUserByUsername(username);
     var annotations = annotationRepository.getAnnotationsByUser(user);
     return annotations.stream().map(AnnotationDto::new).collect(Collectors.toList());
+  }
+
+  @Override
+  public List<Annotation> getAnnotationsByQuranIdAndLabelId(List<Integer> quranIds, UUID labelId) {
+
+    return annotationRepository.getAnnotationsByQuranIdAndLabelId(quranIds, labelId);
   }
 }
