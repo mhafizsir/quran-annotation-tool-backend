@@ -1,6 +1,7 @@
 package id.mhafizsir.quranannotation.service;
 
 import id.mhafizsir.quranannotation.dao.QuranWords;
+import id.mhafizsir.quranannotation.dto.QuranWordsDto;
 import id.mhafizsir.quranannotation.repository.QuranRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,12 @@ public class QuranServiceImpl implements QuranService {
   }
 
   @Override
-  public List<QuranWords> getSuraNames() {
+  public List<QuranWordsDto> getSuraNames() {
     var suraNames = quranRepository.getSuraNames();
     int rowCount = 1;
-    List<QuranWords> quranWordsList = new ArrayList<>();
+    List<QuranWordsDto> quranWordsList = new ArrayList<>();
     for (String suraName : suraNames) {
-      var quranWords = new QuranWords();
+      var quranWords = new QuranWordsDto();
       quranWords.setSura(rowCount);
       quranWords.setSuraName(suraName);
       rowCount++;

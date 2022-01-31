@@ -2,12 +2,14 @@ package id.mhafizsir.quranannotation.service;
 
 import id.mhafizsir.quranannotation.dao.Annotation;
 import id.mhafizsir.quranannotation.dto.AnnotationDto;
+import id.mhafizsir.quranannotation.payload.CreateAnnotationRequest;
 import id.mhafizsir.quranannotation.repository.AnnotationRepository;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,11 +21,12 @@ public class AnnotationServiceImpl implements AnnotationService {
   private final AnnotationRepository annotationRepository;
 
   @Override
-  public AnnotationDto createAnnotation(AnnotationDto annotationDto, String username) {
+  @Transactional
+  public AnnotationDto createAnnotation(CreateAnnotationRequest request, String username) {
 
     var user = authService.getUserByUsername(username);
-    var label = labelService.getLabel(annotationDto.getLabel().getId());
-    var quranWords = quranService.getQuranWordsById(annotationDto.getQuranWords().getId());
+    var label = labelService.getLabel(request.getLabelId());
+    var quranWords = quranService.getQuranWordsById(request.getQuranWordsId());
 
     var annotation = new Annotation();
     annotation.setCreatedAt(OffsetDateTime.now());

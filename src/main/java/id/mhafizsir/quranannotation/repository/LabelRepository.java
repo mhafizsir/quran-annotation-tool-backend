@@ -12,7 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface LabelRepository extends JpaRepository<Label, UUID> {
 
   @Query(value = "select l from Label l "
-      + "join fetch User u on u.id = :userId "
+      + "left join fetch l.user u "
+      + "where u.id=:userId "
       + "order by l.name asc ")
   List<Label> getLabelsByUser(@Param("userId") UUID userId);
 

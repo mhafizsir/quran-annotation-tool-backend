@@ -1,6 +1,7 @@
 package id.mhafizsir.quranannotation.controller;
 
 import id.mhafizsir.quranannotation.dao.QuranWords;
+import id.mhafizsir.quranannotation.dto.QuranWordsDto;
 import id.mhafizsir.quranannotation.service.QuranService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class QuranController {
   }
 
   @GetMapping("/sura")
-  public ResponseEntity<List<QuranWords>> getSuraNames(){
+  public ResponseEntity<List<QuranWordsDto>> getSuraNames(){
 
     return ResponseEntity.ok(quranService.getSuraNames());
   }

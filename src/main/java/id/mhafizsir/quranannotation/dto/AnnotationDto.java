@@ -18,13 +18,13 @@ public class AnnotationDto extends GeneralResponse {
   private UUID id;
   private UUID user;
   private LabelDto label;
-  private QuranWords quranWords;
+  private QuranWordsDto quranWords;
 
   public AnnotationDto(Annotation savedAnnotation) {
 
     this.id = savedAnnotation.getId();
     this.user = savedAnnotation.getUser().getId();
     this.label = new LabelDto(savedAnnotation.getLabel());
-    this.quranWords = savedAnnotation.getQuranWords();
+    this.quranWords = new QuranWordsDto(savedAnnotation.getQuranWords());
   }
 }

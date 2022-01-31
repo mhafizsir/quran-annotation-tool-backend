@@ -5,45 +5,40 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
+@Setter
 @Entity
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "quran_words")
 public class QuranWords {
 
   @Id
-  @Column(updatable = false, insertable = false)
   private Integer id;
-  @Column(updatable = false, insertable = false)
   private Integer aya;
-  @Column(updatable = false, insertable = false)
   private Integer sura;
-  @Column(updatable = false, insertable = false)
   private Integer position;
-  @Column(name = "verse_key", updatable = false, insertable = false)
+  @Column(name = "verse_key")
   private String verseKey;
-  @Column(updatable = false, insertable = false)
   private String text;
-  @Column(updatable = false, insertable = false)
   private String simple;
-  @Column(updatable = false, insertable = false)
   private Integer page;
-  @Column(name = "class_name", updatable = false, insertable = false)
+  @Column(name = "class_name")
   private String className;
-  @Column(updatable = false, insertable = false)
   private Integer line;
-  @Column(updatable = false, insertable = false)
   private String code;
-  @Column(name = "code_v3", updatable = false, insertable = false)
+  @Column(name = "code_v3")
   private String codeV3;
-  @Column(name = "char_type", updatable = false, insertable = false)
+  @Column(name = "char_type")
   private String charType;
-  @Column(name = "translation", updatable = false, insertable = false)
+  @Column(name = "translation")
   private String translation;
-  @Column(name = "sura_name", updatable = false, insertable = false)
+  @Column(name = "sura_name")
   private String suraName;
 }

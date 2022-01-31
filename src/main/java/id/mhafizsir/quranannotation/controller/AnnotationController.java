@@ -1,6 +1,7 @@
 package id.mhafizsir.quranannotation.controller;
 
 import id.mhafizsir.quranannotation.dto.AnnotationDto;
+import id.mhafizsir.quranannotation.payload.CreateAnnotationRequest;
 import id.mhafizsir.quranannotation.service.AnnotationService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,11 @@ public class AnnotationController {
   }
 
   @PostMapping
-  public ResponseEntity<AnnotationDto> createAnnotation(@RequestBody AnnotationDto annotationDto) {
+  public ResponseEntity<AnnotationDto> createAnnotation(@RequestBody CreateAnnotationRequest request) {
 
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
         .getPrincipal();
     var username = userDetails.getUsername();
-    return ResponseEntity.ok(annotationService.createAnnotation(annotationDto, username));
+    return ResponseEntity.ok(annotationService.createAnnotation(request, username));
   }
 }
