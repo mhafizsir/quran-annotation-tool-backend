@@ -1,8 +1,8 @@
 package id.mhafizsir.quranannotation.dto;
 
 import id.mhafizsir.quranannotation.dao.Annotation;
-import id.mhafizsir.quranannotation.dao.QuranWords;
 import id.mhafizsir.quranannotation.payload.GeneralResponse;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +19,7 @@ public class AnnotationDto extends GeneralResponse {
   private UUID user;
   private LabelDto label;
   private QuranWordsDto quranWords;
+  private OffsetDateTime createdAt;
 
   public AnnotationDto(Annotation savedAnnotation) {
 
@@ -26,5 +27,6 @@ public class AnnotationDto extends GeneralResponse {
     this.user = savedAnnotation.getUser().getId();
     this.label = new LabelDto(savedAnnotation.getLabel());
     this.quranWords = new QuranWordsDto(savedAnnotation.getQuranWords());
+    this.createdAt = savedAnnotation.getCreatedAt();
   }
 }
