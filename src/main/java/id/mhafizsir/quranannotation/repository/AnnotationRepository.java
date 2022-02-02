@@ -29,7 +29,7 @@ public interface AnnotationRepository extends JpaRepository<Annotation, UUID> {
 
   @Query(value = "select a from Annotation a "
       + "where a.label.id=:labelId "
-      + "and a.quranWords.id=:quranId")
-  Annotation deleteByQuranIdAndLabelId(@Param("quranId") UUID quranId,
+      + "and a.quranWords.id=:quranWordsId")
+  Annotation deleteByQuranIdAndLabelId(@Param("quranWordsId") Integer quranWordsId,
       @Param("labelId") UUID labelId);
 }
