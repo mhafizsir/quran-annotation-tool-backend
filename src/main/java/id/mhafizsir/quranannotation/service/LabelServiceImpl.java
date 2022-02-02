@@ -46,7 +46,9 @@ public class LabelServiceImpl implements LabelService {
   @Override
   public List<LabelDto> deleteLabel(UUID labelId, String username) {
 
-    labelRepository.deleteById(labelId);
+    var label = labelRepository.getById(labelId);
+    label.setActive(false);
+    labelRepository.save(label);
     return getLabels(username);
   }
 }
