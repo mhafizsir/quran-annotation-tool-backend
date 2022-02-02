@@ -47,7 +47,7 @@ public class AnnotationServiceImpl implements AnnotationService {
   public List<AnnotationDto> getAnnotations(String username) {
 
     var user = authService.getUserByUsername(username);
-    var annotations = annotationRepository.getAnnotationsByUser(user);
+    var annotations = annotationRepository.getAnnotationsByUser(user.getId());
     return annotations.stream().map(AnnotationDto::new).collect(Collectors.toList());
   }
 

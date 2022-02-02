@@ -14,6 +14,7 @@ public interface LabelRepository extends JpaRepository<Label, UUID> {
   @Query(value = "select l from Label l "
       + "left join fetch l.user u "
       + "where u.id=:userId "
+      + "and l.active=true "
       + "order by l.name asc ")
   List<Label> getLabelsByUser(@Param("userId") UUID userId);
 
