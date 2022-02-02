@@ -4,6 +4,7 @@ import id.mhafizsir.quranannotation.dao.Label;
 import id.mhafizsir.quranannotation.dto.LabelDto;
 import id.mhafizsir.quranannotation.repository.LabelRepository;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,9 @@ public class LabelServiceImpl implements LabelService {
   public ArrayList<LabelDto> createLabel(LabelDto labelDto, String username) {
 
     var user = authService.getUserByUsername(username);
-    labelRepository.save(new Label(labelDto, user));
+    var label = new Label(labelDto, user);
+    label.setActive(true);
+    labelRepository.save(label);
     var labels = labelRepository.getLabelsByUser(user.getId());
     return labels.stream().map(LabelDto::new)
         .collect(Collectors.toCollection(ArrayList::new));
@@ -38,5 +41,12 @@ public class LabelServiceImpl implements LabelService {
   @Override
   public Label getLabel(UUID id) {
     return labelRepository.getById(id);
+  }
+
+  @Override
+  public List<LabelDto> deleteLabel(UUID labelId, String username) {
+
+    labelRepository.deleteById(labelId);
+    return getLabels(username);
   }
 }

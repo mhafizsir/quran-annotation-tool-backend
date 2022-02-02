@@ -29,8 +29,11 @@ public class Label extends DateAudit {
   @GeneratedValue
   private UUID id;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false)
   private String name;
+
+  @Column(nullable = false, columnDefinition = "boolean default true")
+  private Boolean active;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)

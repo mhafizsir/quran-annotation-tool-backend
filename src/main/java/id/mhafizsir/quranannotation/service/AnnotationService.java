@@ -13,4 +13,6 @@ public interface AnnotationService {
   List<AnnotationDto> getAnnotations(String username);
 
   List<Annotation> getAnnotationsByQuranIdAndLabelId(List<Integer> quranIds, UUID labelId);
+
+  List<AnnotationDto> deleteAnnotation(UUID annotationId, String username);
 }

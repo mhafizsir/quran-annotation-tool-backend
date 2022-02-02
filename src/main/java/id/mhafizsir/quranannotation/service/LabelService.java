@@ -12,4 +12,6 @@ public interface LabelService {
   List<LabelDto> createLabel(LabelDto labelDto, String username);
 
   Label getLabel(UUID id);
+
+  List<LabelDto> deleteLabel(UUID labelId, String username);
 }
