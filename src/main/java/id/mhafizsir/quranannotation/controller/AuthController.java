@@ -9,17 +9,13 @@ import id.mhafizsir.quranannotation.payload.TokenRefreshResponse;
 import id.mhafizsir.quranannotation.service.AuthService;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE,
-    RequestMethod.PUT, RequestMethod.HEAD})
 public class AuthController {
 
   private final AuthService authService;

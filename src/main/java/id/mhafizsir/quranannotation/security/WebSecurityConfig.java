@@ -3,6 +3,8 @@ package id.mhafizsir.quranannotation.security;
 import id.mhafizsir.quranannotation.security.jwt.AuthEntryPointJwt;
 import id.mhafizsir.quranannotation.security.jwt.AuthTokenFilter;
 import id.mhafizsir.quranannotation.service.UserDetailsServiceImpl;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -58,7 +60,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+
+    var corsConfiguration = new CorsConfiguration();
+    corsConfiguration.applyPermitDefaultValues();
+    corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD"));
+    corsConfiguration.setAllowedOrigins(List.of("*"));
+
+    http.cors().configurationSource(
+            request -> new CorsConfiguration().applyPermitDefaultValues().combine(corsConfiguration))
         .and().csrf().disable().authorizeRequests()
         .antMatchers("/api/auth/**", "/v3/api-docs/**", "/swagger-ui/**")
         .permitAll()
