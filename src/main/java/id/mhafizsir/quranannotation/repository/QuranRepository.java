@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuranRepository extends JpaRepository<QuranWords, Integer> {
 
-  @Query(value = "select q from QuranWords q where q.sura = :suraId")
+  @Query(value = "select q from QuranWords q where q.sura = :suraId order by q.id asc")
   List<QuranWords> getQuranWordsBySuraId(@Param("suraId") Integer suraId);
 
   @Query(value = "select q from QuranWords q where q.page = :pageId")
