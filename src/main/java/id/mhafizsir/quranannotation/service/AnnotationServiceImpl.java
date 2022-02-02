@@ -58,9 +58,10 @@ public class AnnotationServiceImpl implements AnnotationService {
   }
 
   @Override
-  public List<AnnotationDto> deleteAnnotation(UUID annotationId, String username) {
+  public List<AnnotationDto> deleteAnnotation(UUID quranId, UUID labelId, String username) {
 
-    annotationRepository.deleteById(annotationId);
+    var annotation = annotationRepository.deleteByQuranIdAndLabelId(quranId, labelId);
+    annotationRepository.delete(annotation);
     return getAnnotations(username);
   }
 }

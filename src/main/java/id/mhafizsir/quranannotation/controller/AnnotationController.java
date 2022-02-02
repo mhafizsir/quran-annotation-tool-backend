@@ -43,13 +43,13 @@ public class AnnotationController {
     return ResponseEntity.ok(annotationService.createAnnotation(request, username));
   }
 
-  @DeleteMapping("/{annotationId}")
+  @DeleteMapping("/{quranId}/{labelId}")
   public ResponseEntity<List<AnnotationDto>> deleteAnnotation(
-      @PathVariable("annotationId") UUID annotationId) {
+      @PathVariable("quranId") UUID quranId, @PathVariable("labelId") UUID labelId) {
 
     UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
         .getPrincipal();
     var username = userDetails.getUsername();
-    return ResponseEntity.ok(annotationService.deleteAnnotation(annotationId, username));
+    return ResponseEntity.ok(annotationService.deleteAnnotation(quranId, labelId, username));
   }
 }
